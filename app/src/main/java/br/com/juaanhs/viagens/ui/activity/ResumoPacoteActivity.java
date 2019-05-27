@@ -1,5 +1,6 @@
 package br.com.juaanhs.viagens.ui.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +38,8 @@ public class ResumoPacoteActivity extends AppCompatActivity {
         mostraDias(pacoteSaoPaulo);
         mostraPreco(pacoteSaoPaulo);
         mostraData(pacoteSaoPaulo);
+        Intent intent = new Intent(getApplicationContext(), PagamentoActivity.class);
+        startActivity(intent);
     }
 
     private void mostraData(Pacote pacote) {
