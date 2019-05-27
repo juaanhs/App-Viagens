@@ -1,9 +1,10 @@
 package br.com.juaanhs.viagens.model;
 
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Pacote {
+public class Pacote implements Serializable {
 
     private final String local;
     private final String imagem;
@@ -32,5 +33,4 @@ public class Pacote {
     public BigDecimal getPreco() {
         return preco;
     }
-
 }

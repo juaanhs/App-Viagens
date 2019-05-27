@@ -20,5 +20,4 @@ public class PacoteDAO {
                 new Pacote("Foz do Iguaçu", "foz_do_iguacu_pr", 1, new BigDecimal(289.90))));
         return pacotes;
     }
-
 }

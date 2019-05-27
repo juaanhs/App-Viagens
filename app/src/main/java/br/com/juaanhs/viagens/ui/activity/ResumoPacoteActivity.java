@@ -5,12 +5,9 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import br.com.juaanhs.viagens.R;
 import br.com.juaanhs.viagens.model.Pacote;
@@ -18,6 +15,8 @@ import br.com.juaanhs.viagens.util.DataUtil;
 import br.com.juaanhs.viagens.util.DiasUtil;
 import br.com.juaanhs.viagens.util.MoedaUtil;
 import br.com.juaanhs.viagens.util.ResourceUtil;
+
+import static br.com.juaanhs.viagens.ui.activity.PacoteActivity.CHAVE_PACOTE;
 
 public class ResumoPacoteActivity extends AppCompatActivity {
 
@@ -27,19 +26,44 @@ public class ResumoPacoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resumo_pacote);
-
         setTitle(TITULO_APPBAR);
 
-        Pacote pacoteSaoPaulo = new Pacote("São Paulo", "sao_paulo_sp",
-                2, new BigDecimal("243.99"));
+        carregaPacoteRecebido();
+    }
 
-        mostraLocal(pacoteSaoPaulo);
-        mostraImagem(pacoteSaoPaulo);
-        mostraDias(pacoteSaoPaulo);
-        mostraPreco(pacoteSaoPaulo);
-        mostraData(pacoteSaoPaulo);
-        Intent intent = new Intent(getApplicationContext(), PagamentoActivity.class);
+    private void carregaPacoteRecebido() {
+        Intent intent = getIntent();
+        if(intent.hasExtra(CHAVE_PACOTE)) {
+            final Pacote pacote = (Pacote) intent.getSerializableExtra(CHAVE_PACOTE);
+
+            inicializaCampos(pacote);
+            configuraBotao(pacote);
+        }
+    }
+
+    private void configuraBotao(final Pacote pacote) {
+        Button botaoRealizaPagamento = findViewById(R.id.resumo_pacote_botao_realiza_pagamento);
+        botaoRealizaPagamento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                vaiParaPagamento(pacote);
+            }
+        });
+    }
+
+    private void vaiParaPagamento(Pacote pacote) {
+        Intent intent = new Intent(getApplicationContext(),
+                PagamentoActivity.class);
+        intent.putExtra(CHAVE_PACOTE, pacote);
         startActivity(intent);
+    }
+
+    private void inicializaCampos(Pacote pacote) {
+        mostraLocal(pacote);
+        mostraImagem(pacote);
+        mostraDias(pacote);
+        mostraPreco(pacote);
+        mostraData(pacote);
     }
 
     private void mostraData(Pacote pacote) {
